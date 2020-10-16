@@ -13,9 +13,27 @@ const api = axios.create({
 })
 export class AppComponent {
   public customers: Customer[] = [];
+  public mode: String = 'list';
   public form: FormGroup;
 
-  constructor(){
+  constructor(private fb: FormBuilder){
+
+  this.form = this.fb.group({
+    id: [''],
+    CNPJ: [''],
+    RazaoSocial: [''],
+    NomeFantasia: [''],
+    Email: [''],
+    Telefone: [''],
+    NomeContato: [''],
+    EnderecoCep: [''],
+    EnderecoLogradouro: [''],
+    EnderecoNro: [''],
+    EnderecoBairro: [''],
+    EnderecoCidade: [''],
+    EnderecoEstado: [''],
+  });
+
   this.GET();
   }
 
@@ -33,53 +51,57 @@ export class AppComponent {
 
   async SHOW(id: Number){
   try {
-  const response = api.get(`customers?id=${id}`);
-  console.log(response);
+    this.mode = 'edit';
+    const response = await api.get(`customers?id=${id}`);
+    console.log(response);
   } catch (error) {
-  console.warn(error);
+    console.warn(error);
   }
   }
   async POST(){
   try {
   const data = {
-  CNPJ:"10607215000227",
-  RazaoSocial:"Teste de Cadastro",
-  NomeFantasia:"Teste",
-  Email:"teste@teste.com.br",
-  Telefone:"16992346460",
-  NomeContato:"Teste",
-  EnderecoCep:"14860000",
-  EnderecoLogradouro:"Rua teste",
-  EnderecoNro:"123",
-  EnderecoBairro:"Vila Virginia",
-  EnderecoCidade:"Ribeirão Preto",
-  EnderecoEstado:"São Paulo"
+  CNPJ:this.form.controls['CNPJ'].value,
+  RazaoSocial:this.form.controls['RazaoSocial'].value,
+  NomeFantasia:this.form.controls['NomeFantasia'].value,
+  Email:this.form.controls['Email'].value,
+  Telefone:this.form.controls['Telefone'].value,
+  NomeContato:this.form.controls['NomeContato'].value,
+  EnderecoCep:this.form.controls['EnderecoCep'].value,
+  EnderecoLogradouro:this.form.controls['EnderecoLogradouro'].value,
+  EnderecoNro:this.form.controls['EnderecoNro'].value,
+  EnderecoBairro:this.form.controls['EnderecoBairro'].value,
+  EnderecoCidade:this.form.controls['EnderecoCidade'].value,
+  EnderecoEstado:this.form.controls['EnderecoEstado'].value
   };
-  const response = api.post("customers",data);
+  const response = await api.post("customers",data);
   console.log(response);
+  this.GET();
   } catch (error) {
   console.warn(error);
   }
   }
   async PUT(){
     try {
+      const id = this.form.controls['id'].value;
       const data = {
-      ID:2,
-      CNPJ:"10607215000227",
-      RazaoSocial:"Teste de Cadastro 1",
-      NomeFantasia:"Teste 1",
-      Email:"teste@teste.com.br",
-      Telefone:"16992346460",
-      NomeContato:"Teste 1",
-      EnderecoCep:"14860000",
-      EnderecoLogradouro:"Rua teste 1",
-      EnderecoNro:"1234",
-      EnderecoBairro:"Vila Virginia",
-      EnderecoCidade:"Ribeirão Preto",
-      EnderecoEstado:"São Paulo"
+        CNPJ:this.form.controls['CNPJ'].value,
+        RazaoSocial:this.form.controls['RazaoSocial'].value,
+        NomeFantasia:this.form.controls['NomeFantasia'].value,
+        Email:this.form.controls['Email'].value,
+        Telefone:this.form.controls['Telefone'].value,
+        NomeContato:this.form.controls['NomeContato'].value,
+        EnderecoCep:this.form.controls['EnderecoCep'].value,
+        EnderecoLogradouro:this.form.controls['EnderecoLogradouro'].value,
+        EnderecoNro:this.form.controls['EnderecoNro'].value,
+        EnderecoBairro:this.form.controls['EnderecoBairro'].value,
+        EnderecoCidade:this.form.controls['EnderecoCidade'].value,
+        EnderecoEstado:this.form.controls['EnderecoEstado'].value
       };
-      const response = await api.put("customers",data);
+      const response = await api.put(`customers?id=${id}`,data);
       console.log(response);
+      this.mode = 'list';
+      this.GET();
     } catch (error) {
       console.warn(error);
     }
@@ -88,6 +110,7 @@ export class AppComponent {
   try {
   const response = await api.delete(`customers?id=${id}`);
   console.log(response);
+  this.GET();
   } catch (error) {
   console.warn(error);
   }

@@ -1,5 +1,5 @@
 <div class="container">
-<div class="table-responsive">
+<div class="table-responsive" *ngIf="mode=='list'">
 <table class="table">
   <thead>
     <tr>
@@ -41,4 +41,73 @@
 </table>
 </div>
 
+<form *ngIf="mode=='edit'">
+
+  <div class="form-group">
+    <label>Endereço de email</label>
+    <input type="text" class="form-control" formControlName="id" disabled placeholder="id">
+  </div>
+
+  <div class="form-group">
+    <label>CNPJ</label>
+    <input type="text" class="form-control" formControlName="CNPJ" placeholder="CNPJ">
+  </div>
+
+  <div class="form-group">
+    <label>Razão social</label>
+    <input type="text" class="form-control" formControlName="RazaoSocial" placeholder="Razão social">
+  </div>
+
+  <div class="form-group">
+    <label>Nome fantasia</label>
+    <input type="text" class="form-control" formControlName="NomeFantasia" placeholder="Nome fantasia">
+  </div>
+
+  <div class="form-group">
+    <label>Email</label>
+    <input type="text" class="form-control" formControlName="Email" placeholder="Email">
+  </div>
+
+  <div class="form-group">
+    <label>Telefone</label>
+    <input type="text" class="form-control" formControlName="Telefone" placeholder="Telefone">
+  </div>
+
+  <div class="form-group">
+    <label>Contato</label>
+    <input type="text" class="form-control" formControlName="NomeContato" placeholder="Contato">
+  </div>
+
+  <div class="form-group">
+    <label>Cep</label>
+    <input type="text" class="form-control" formControlName="EnderecoCep" placeholder="Cep">
+  </div>
+
+  <div class="form-group">
+    <label>Logradouro</label>
+    <input type="text" class="form-control" formControlName="EnderecoLogradouro" placeholder="Logradouro">
+  </div>
+
+  <div class="form-group">
+    <label>Nro</label>
+    <input type="text" class="form-control" formControlName="EnderecoNro" placeholder="Nro">
+  </div>
+
+  <div class="form-group">
+    <label>Bairro</label>
+    <input type="text" class="form-control" formControlName="EnderecoBairro" placeholder="Bairro">
+  </div>
+
+  <div class="form-group">
+    <label>Cidade</label>
+    <input type="text" class="form-control" formControlName="EnderecoCidade" placeholder="Cidade">
+  </div>
+
+  <div class="form-group">
+    <label>Estado</label>
+    <input type="text" class="form-control" formControlName="EnderecoEstado" placeholder="Estado">
+  </div>
+
+  <button type="submit" class="btn btn-primary">Enviar</button>
+</form>
 </div>
